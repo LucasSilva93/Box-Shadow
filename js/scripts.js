@@ -27,7 +27,7 @@ class BoxShadowGenerator {
     this.mozRule = mozRule;
   }
 
-  //função 
+  //função
   initialize() {
     //Value box-shadow
     this.horizontalRef.value = this.horizontal.value;
@@ -35,13 +35,13 @@ class BoxShadowGenerator {
     this.blurRef.value = this.blur.value;
     this.spreadRef.value = this.spread.value;
 
-    this.applyRule();
-    this.showRule();
+    this.applyRule(); // Preview Box Shadow inicial
+    this.showRule(); // Copíe e cole inicial
   }
 
   //função box shadow Preview
   applyRule() {
-    this.previewBox.style.boxShadow = `${this.horizontalRef.value}px ${this.verticalRef.value}px ${this.blurRef.value}px ${this.spreadRef.value}px #000000` ;
+    this.previewBox.style.boxShadow = `${this.horizontalRef.value}px ${this.verticalRef.value}px ${this.blurRef.value}px ${this.spreadRef.value}px #000000`;
 
     this.currentRule = this.previewBox.style.boxShadow;
   }
@@ -53,6 +53,26 @@ class BoxShadowGenerator {
     this.mozRule.innerText = this.currentRule;
   }
 
+  // atualizando valor da Box Shadow
+  updateValue(type, value) {
+    switch (type) {
+      case "horizontal":
+        this.horizontalRef.value = value;
+        break;
+      case "vertical":
+        this.verticalRef.value = value;
+        break;
+      case "blur":
+        this.blurRef.value = value;
+        break;
+      case "spread":
+        this.spreadRef.value = value;
+        break;
+    }
+
+    this.applyRule(); // Preview Box Shadow atualizado
+    this.showRule(); // Copíe e cole atualizado
+  }
 }
 
 // Seleção de elementos
@@ -91,3 +111,25 @@ const boxShadow = new BoxShadowGenerator(
 );
 
 boxShadow.initialize();
+
+//Eventos
+horizontal.addEventListener("input", (e) => {
+  const value = e.target.value;
+
+  boxShadow.updateValue("horizontal", value);
+});
+vertical.addEventListener("input", (e) => {
+  const value = e.target.value;
+
+  boxShadow.updateValue("vertical", value);
+});
+blur.addEventListener("input", (e) => {
+  const value = e.target.value;
+
+  boxShadow.updateValue("blur", value);
+});
+spread.addEventListener("input", (e) => {
+  const value = e.target.value;
+
+  boxShadow.updateValue("spread", value);
+});
